@@ -1,0 +1,15 @@
+.select {
+    box-sizing: border-box;
+    border: 2px solid #69f0ae;
+    border-radius: 4px;
+  }
+  .nave{
+  height:70px !important;
+  }
+  .input-field {
+    [type="checkbox"] + label,
+    [type="radio"]:not(:checked) + label,
+    [type="radio"]:checked + label {
+      pointer-events: auto;
+    }
+  }

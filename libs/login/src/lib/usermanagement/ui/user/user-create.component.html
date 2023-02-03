@@ -1,0 +1,80 @@
+<!-- <div materialize class="col s12">
+  <div class="card oryx-card-radius">
+    <div class="card-content">
+      <div class="row">
+        <ag-grid-angular style="width: 100%; height: 516px;" [ngClass]="agTheme" [gridOptions]="gridOptions" [columnDefs]="columnDefs"
+          groupHeaders rowHeight="48" rowSelection="single" (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+      </div>
+    </div>
+    <div class="row">
+     </div>
+  </div>
+</div>
+<div *ngIf="(display==1)">
+  <app-dialog [(visible)]="showDialog">
+
+    <div class="row">
+      <form materialize materialize="updateTextFields" [formGroup]="formUserName" (ngSubmit)="closeForm(formUserName.value)">
+        <div class="row">
+          <div class="col l3 align">
+            <span>New UserName:</span>
+          </div>
+          <div class="input-field col l6">
+            <input id="userName" type="text" formControlName="userName" class="validate" name="userName">
+            <label for="userName">New Username</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col l3 align">
+            <span>New Email:</span>
+          </div>
+          <div class="input-field col l6">
+            <input id="email" type="email" formControlName="email" class="validate" name="email">
+            <label for="email">New Email</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <button [disabled]="formUserName.invalid || formUserName.pristine" [ngClass]="btnClass$ | async" type="submit">Save</button>
+        </div>
+
+      </form>
+    </div>
+
+  </app-dialog>
+</div>
+<div *ngIf="(display==2)">
+  <app-dialog [(visible)]="showDialog">
+    <div class="row">
+
+      <form materialize materialize="updateTextFields" [formGroup]="form" (ngSubmit)="resetForm(form.value)">
+        <div class="container">
+          <div class="row">
+            <div class="col l4 align">
+              <span>New PassWord:</span>
+            </div>
+            <div class="input-field col l6">
+              <input id="password" type="password" [formControl]="form.controls['password']" class="validate" name="password">
+              <label for="password">New Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col l4 align">
+              <span>Confirm PassWord:</span>
+            </div>
+            <div class="input-field col l6">
+              <input id="password" type="password" [formControl]="form.controls['password']" class="validate" name="password">
+              <label for="password">Confirm Password</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <button [disabled]="form.invalid || form.pristine" [ngClass]="btnClass$ | async" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </app-dialog>
+</div> -->

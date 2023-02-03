@@ -1,0 +1,63 @@
+.nav-pills, .nav-tabs {
+  border: 0;
+  border-radius: 3px;
+  padding: 0 15px;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.nav .nav-item {
+  position: relative;
+}
+.nav-pills.nav-pills-rose .nav-item .nav-link.active, .nav-pills.nav-pills-rose .nav-item .nav-link.active:focus, .nav-pills.nav-pills-rose .nav-item .nav-link.active:hover {
+  background-color: #e91e63;
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(233,30,99,.6);
+  color: #fff;
+}
+.nav-pills .nav-item .nav-link.active {
+  color: #fff;
+  background-color: #9c27b0;
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(156,39,176,.6);
+}
+.nav-pills .nav-item .nav-link {
+  line-height: 24px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 100px;
+  text-align: center;
+  color: #555;
+  transition: all .3s;
+  border-radius: 30px;
+  padding: 10px 15px;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #2196f3;
+}
+.nav-pills .nav-link, .nav-tabs .nav-link {
+  padding: 1.4286em .8575em;
+  font-size: .875rem;
+  font-weight: 500;
+  border: 0;
+}
+.nav-pills .nav-link {
+  border-radius: .25rem;
+}
+.nav-link {
+  text-transform: uppercase;
+}
+.nav-link {
+  display: block;
+  padding: .5rem 1rem;
+}
+.tab-space {
+  padding: 20px 0 50px;
+}
+.tab-content>.active {
+  display: block;
+}

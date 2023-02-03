@@ -1,0 +1,15 @@
+<!-- <app-sub-nav-bar [items]="roles$" (newItem)="edit(null)" (deleteItem)="delete()" (selectItem)="edit($event)" [itemName]="'Roles'"></app-sub-nav-bar>
+<div class="row"></div>
+<div class="row">
+  <div class="col s12">
+    <div class="cards-stacked   text-dark">
+      <div materialize class="row">
+        <app-role-create [role]="role$ | async" [permissions]="permissions$ | async" [secEntity]="secEntity$ | async" [securables]="securables$ | async"
+          (add)="add($event)" [secLookup]="secLookup$ | async" (update)="update($event)" [userLookup]="userLookup$ | async"
+          [userEntity]="userEntity$ | async" [agTheme]="agTheme$ | async">
+        </app-role-create>
+      </div>
+    </div>
+    <ng-template #loading>Loading User Data...</ng-template>
+  </div>
+</div> -->

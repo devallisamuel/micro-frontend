@@ -1,0 +1,35 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "rootDir": ".",
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "target": "ESNext",
+    "module": "esnext",
+    "lib": ["es2015", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@oriolaent-frontends/app-util": ["libs/app-util/src/index.ts"],
+      "@oriolaent-frontends/generic-service": [
+        "libs/generic-service/src/index.ts"
+      ],
+      "@oriolaent-frontends/generic-store": ["libs/generic-store/src/index.ts"],
+      "@oriolaent-frontends/layout": ["libs/layout/src/index.ts"],
+      "@oriolaent-frontends/login": ["libs/login/src/index.ts"],
+      "@oriolaent-frontends/third-party": ["libs/third-party/src/index.ts"],
+      "@oriolaent-frontends/ui": ["libs/ui/src/index.ts"],
+      "@terminalmgr-core/*": ["apps/terminalmgr/src/app/core/*"],
+      "@terminalmgr-src/*": ["apps/terminalmgr/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

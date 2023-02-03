@@ -1,0 +1,398 @@
+<div class="bar" #insideElement>
+  <mat-sidenav-container
+    [hasBackdrop]="false"
+    style="overflow: visible !important"
+  >
+    <mat-sidenav
+      #sidenav
+      [(opened)]="fullScreen"
+      mode="side"
+      class="fullScreen"
+      role="navigation"
+      (mouseenter)="enter()"
+    >
+      <div *ngIf="fullScreen" fxLayoutAlign="center center" class="logo">
+        <span [routerLink]="['/home']">
+          <img
+            *ngIf="companyImage"
+            class="logo-image"
+            [src]="companyImage"
+            id="company_image"
+            alt="Company Logo"
+          />
+          <img
+            *ngIf="!companyImage"
+            class="logo-image"
+            src="assets/images/office-building.png"
+            alt="Company Logo"
+            id="company_image"
+          />
+        </span>
+      </div>
+      <div *ngIf="!fullScreen" fxLayoutAlign="center center" class="sm-logo">
+        <span [routerLink]="['/home']">
+          <img
+            *ngIf="companyImage"
+            class="min-logo logo-image"
+            [src]="companyImage"
+          />
+          <img
+            *ngIf="!companyImage"
+            class="min-logo logo-image"
+            src="assets/images/office-building.png"
+            alt="Company Logo"
+          />
+        </span>
+      </div>
+
+      <!-- <div class="nav-speech-loader" (click)="navSpeechLoader()">
+        <img src="/assets/images/speach.svg">
+      </div> -->
+
+      <div class="scrollable">
+        <mat-nav-list class="navigation-list mb-1">
+          <mat-accordion [multi]="false">
+            <div *ngFor="let item of menus">
+              <div *ngIf="!item.children">
+                <a
+                  mat-list-item
+                  class="navigation-item"
+                  [routerLink]="[item.route]"
+                  routerLinkActive="menu-active"
+                  (click)="smallScreenToggle(item)"
+                >
+                  <infusync-icons
+                    class="menu-icon"
+                    name="{{ item.icon }}"
+                  ></infusync-icons>
+                  <span class="navigation-item-label ml-3"
+                    >{{ item.name }}
+                  </span>
+                </a>
+              </div>
+
+              <mat-expansion-panel
+                *ngIf="item.children"
+                class="sub-parent"
+                routerLinkActive="menu-active"
+              >
+                <mat-expansion-panel-header
+                  [ngClass]="!fullScreen ? 'no-padding' : ''"
+                >
+                  <mat-panel-title>
+                    <a mat-list-item>
+                      <infusync-icons
+                        class="menu-icon sub-parent-icon"
+                        name="{{ item.icon }}"
+                      ></infusync-icons>
+                      <div class="navigation-item-label ml-3">
+                        {{ item.name }}
+                      </div>
+                    </a>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div [hidden]="!fullScreen">
+                  <mat-nav-list
+                    *ngFor="let subItem of item['children']"
+                    class="sub-lists"
+                  >
+                    <a
+                      mat-list-item
+                      [routerLink]="[subItem.route]"
+                      routerLinkActive="sub-active"
+                      (click)="$event.stopPropagation()"
+                      class="sub-list"
+                    >
+                      <span class="subMenu-icon">
+                        <mat-icon [inline]="true">arrow_forward</mat-icon>
+                      </span>
+                      <span>{{ subItem.name }}</span>
+                    </a>
+                  </mat-nav-list>
+
+                  <mat-divider color="primary" class="mt-1"></mat-divider>
+                </div>
+              </mat-expansion-panel>
+            </div>
+          </mat-accordion>
+        </mat-nav-list>
+        <button
+          class="shaded-button"
+          color="primary"
+          *ngIf="fullScreen && hmoMenu"
+          mat-raised-button
+          class="supportButton"
+          (click)="chmClick()"
+        >
+          Talk to Infusync
+        </button>
+        <span *ngIf="fullScreen && !showDark" class="footer-img">
+          <img src="assets/images/light-footer.png" />
+        </span>
+        <span *ngIf="fullScreen && showDark" class="footer-img">
+          <img src="assets/images/dark-footer.png" />
+        </span>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="my-toolbar">
+        <mat-toolbar>
+          <mat-icon
+            (click)="toggleSidebar()"
+            [ngClass]="{ myToggleSmallScreen: !fullScreen }"
+            class="myToggle"
+            >menu</mat-icon
+          >
+          <infusync-icons name="search" class="infusync-icon"></infusync-icons>
+          <input
+            placeholder="Search by typing or voice..."
+            class="top-search"
+            style="margin: 0 3px"
+          />
+          <!-- <img src="/assets/images/speach.svg" (click)="openSpeechRecogDialog()" style="width: 1.3em; height: 1.3em; cursor: pointer;" title="Click to search by voice"/> -->
+
+          <div fxFlex fxLayout fxLayoutAlign="flex-end">
+            <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+              <li fxHide.sm fxHide.xs class="time nav-icon">
+                {{ currentTime | async }}
+              </li>
+              <li class="nav-item" (click)="navigate()">
+                <infusync-icons
+                  name="message"
+                  class="infusync-icon"
+                ></infusync-icons>
+                <span
+                  matBadge="{{ unread }}"
+                  [matBadgeHidden]="unread === 0"
+                  matBadgeSize="small"
+                  matBadgeColor="warn"
+                ></span>
+              </li>
+              <li class="nav-item" [matMenuTriggerFor]="notification">
+                <infusync-icons
+                  name="notification"
+                  class="infusync-icon"
+                ></infusync-icons>
+                <span
+                  matBadge="{{ notifications.length }}"
+                  [matBadgeHidden]="notifications.length === 0"
+                  matBadgeSize="small"
+                  matBadgeColor="warn"
+                ></span>
+              </li>
+              <li
+                class="nav-item"
+                *ngIf="tenantUsers?.length > 0"
+                [matMenuTriggerFor]="tenant"
+              >
+                <infusync-icons
+                  name="product-menu"
+                  class="infusync-icon"
+                ></infusync-icons>
+              </li>
+
+              <mat-menu backdropClass="notif-menu" #notification="matMenu">
+                <li mat-menu-item class="notification-centered">
+                  NOTIFICATIONS
+                </li>
+                <div *ngIf="notifications.length > 0">
+                  <div class="just-scroll">
+                    <li
+                      class="mb-2"
+                      mat-menu-item
+                      *ngFor="let notification of notifications"
+                    >
+                      <img
+                        class="notification-img bar-profile-pic"
+                        src="{{ notification.image }}"
+                        alt="my profile pic"
+                      />
+                      <span class="menu-info enrollee-detail">
+                        <span class="menu-title">{{
+                          notification.senderName
+                        }}</span>
+                        <span class="menu-desc">
+                          <i class="material-icons">access_time</i>
+                          {{ notification.createDate | timeAgo }}
+                        </span>
+                        <span class="menu-desc">{{
+                          notification.message
+                        }}</span>
+                      </span>
+                    </li>
+                  </div>
+                </div>
+                <li
+                  mat-menu-item
+                  class="notification-centered"
+                  *ngIf="notifications.length === 0"
+                >
+                  <span class="no-notif">No notifications</span>
+                </li>
+              </mat-menu>
+
+              <mat-menu class="tenant-menu" #tenant="matMenu">
+                <div class="row theme-row">
+                  <div
+                    mat-menu-item
+                    class="col-sm-6"
+                    *ngFor="let tenant of tenantUsers"
+                    (click)="changeTenant(tenant)"
+                    [ngClass]="{
+                      'tenant-active background-shade':
+                        tenant.tenantId === currentTenantId
+                    }"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <img
+                      *ngIf="tenant.tenantLogo; else defLogo"
+                      [src]="tenant.tenantLogo"
+                    />
+                    <ng-template #defLogo>
+                      <img src="assets/images/office-building.png" />
+                    </ng-template>
+                    <h6 class="text-center mt-2">{{ tenant.tenantName }}</h6>
+                  </div>
+                </div>
+
+                <mat-divider class="mt-2"></mat-divider>
+
+                <div
+                  class="row theme-row"
+                  *ngIf="
+                    tenantInfo?.id === currentTenantId &&
+                    tenantInfo?.programs.length > 0
+                  "
+                >
+                  <div class="col-sm-12">
+                    <h5 class="text-center mb-0">Select Program</h5>
+                  </div>
+                </div>
+                <mat-divider class="mb-2"></mat-divider>
+                <div
+                  class="row theme-row"
+                  *ngIf="
+                    tenantInfo?.id === currentTenantId &&
+                    tenantInfo?.programs.length > 0
+                  "
+                >
+                  <div
+                    mat-menu-item
+                    class="col-sm-6"
+                    *ngFor="let program of tenantInfo?.programs"
+                    (click)="changeProgram(program)"
+                    [ngClass]="{
+                      'tenant-active background-shade':
+                        program.code?.toLowerCase() ===
+                        programCode?.toLowerCase()
+                    }"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <img
+                      *ngIf="tenantInfo?.logo; else defLogo"
+                      [src]="tenantInfo?.logo"
+                    />
+                    <ng-template #defLogo>
+                      <img src="assets/images/office-building.png" />
+                    </ng-template>
+                    <h6 class="text-center mt-2">{{ program.name }}</h6>
+                  </div>
+                </div>
+              </mat-menu>
+
+              <mat-divider class="ml-2" [vertical]="true"></mat-divider>
+              <li>
+                <button
+                  [matMenuTriggerFor]="profile"
+                  mat-icon-button
+                  class="profileButton mr-2"
+                >
+                  <span class="mr-1 ml-1" *ngIf="hmoMenu">
+                    <img
+                      class="bar-profile-pic"
+                      [src]="
+                        userProfile?.picture
+                          ? userProfile?.picture
+                          : 'assets/images/User.png'
+                      "
+                      alt="my profile pic"
+                    />
+                  </span>
+                  <span class="greeting">Hi, </span>
+                  <span class="username"
+                    >{{ userName }}
+                    <mat-icon class="mySelect">keyboard_arrow_down</mat-icon>
+                  </span>
+                </button>
+              </li>
+              <mat-menu backdropClass="myMenu" #profile="matMenu">
+                <button mat-menu-item routerLink="/user-profile">
+                  <infusync-icons
+                    name="avatar"
+                    class="infusync-icon mat-icon profile-icon"
+                  ></infusync-icons>
+                  <span class="user-menu-label">Profile</span>
+                </button>
+                <button mat-menu-item>
+                  <div class="input-group">
+                    <div class="input-group-prepend mr-2 dark-button">
+                      <infusync-icons
+                        name="mode"
+                        class="infusync-icon mat-icon profile-icon"
+                      ></infusync-icons>
+                      <span class="user-menu-label dark-text">Dark Theme </span>
+                    </div>
+                    <span
+                      class="theme-toggler"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <mat-slide-toggle
+                        [checked]="isDarkTheme"
+                        (change)="toggleTheme($event.checked)"
+                        [(ngModel)]="showDark"
+                      >
+                      </mat-slide-toggle>
+                    </span>
+                  </div>
+                </button>
+                <div mat-menu-item (click)="onLogout()">
+                  <button mat-raised-button color="warn" style="width: 100%">
+                    Log Out
+                  </button>
+                </div>
+              </mat-menu>
+            </ul>
+          </div>
+        </mat-toolbar>
+      </div>
+      <div
+        *ngIf="
+          tenantInfo?.id &&
+          tenantInfo?.id !== currentTenantId &&
+          getTenantName(currentTenantId)
+        "
+        class="switch-notification"
+      >
+        You are currently on {{ getTenantName(currentTenantId) }}
+      </div>
+      <div
+        class="switch-notification"
+        *ngIf="programCode && getProgramName(programCode)"
+      >
+        You are currently on {{ getProgramName(programCode) }}
+      </div>
+    </mat-sidenav-content>
+
+    <!-- <mat-sidenav-content>
+      <footer>
+        <mat-toolbar>
+          <div fxLayout="center center" class="footerText">
+            Copyright © 2020 Infusync. All rights reserved. This service is
+            Infusync confidential and proprietary for use by authorized clients.
+          </div>
+        </mat-toolbar>
+      </footer>
+    </mat-sidenav-content> -->
+  </mat-sidenav-container>
+</div>

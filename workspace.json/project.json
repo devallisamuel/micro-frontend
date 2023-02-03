@@ -1,0 +1,32 @@
+{
+    "projects": {
+        "auth": {
+          "tags": []
+        },
+        "core-lib": {
+          "tags": []
+        },
+        "data-models": {
+          "tags": []
+        },
+        "layout": {
+          "tags": []
+        },
+        "login": {
+          "tags": []
+        },
+        "material": {
+          "tags": []
+        },
+        "products": {
+          "tags": []
+        },
+        "terminalmgr": {
+          "tags": []
+        },
+        "terminalmgr-e2e": {
+          "tags": [],
+          "implicitDependencies": ["terminalmgr"]
+        }
+      }
+}

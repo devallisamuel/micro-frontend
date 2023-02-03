@@ -1,0 +1,687 @@
+<div class="hmo" *ngIf="!(TenantLoading$ | async); else loading">
+  <div class="hmo-side card-container" [ngSwitch]="case">
+    <div class="logo-name">
+      <div class="pic">
+        <ng-template #logo2>
+          <h4>Company Information</h4>
+        </ng-template>
+        <img src="assets/images/Group3351.svg" alt="vggg" />
+      </div>
+    </div>
+    <ul class="menu">
+      <li>
+        <span
+          *ngIf="!infoForm.valid"
+          [ngClass]="{ 'hmo-active1': infoForm.valid }"
+          class="num"
+          >1</span
+        >
+        <span
+          *ngIf="infoForm.valid"
+          [ngClass]="{ 'hmo-active1': infoForm.valid }"
+          class="numImg"
+        >
+          <img src="assets/images/done-24px.svg" alt="vggg" />
+        </span>
+        <span [ngClass]="infoForm.valid ? 'hmo-active' : 'text-color'"
+          >Company Information</span
+        >
+      </li>
+      <li>
+        <span
+          *ngIf="mailForm.valid"
+          [ngClass]="{ 'hmo-active1': mailForm.valid }"
+          class="numImg"
+        >
+          <img src="assets/images/done-24px.svg" alt="vggg" />
+        </span>
+        <span
+          *ngIf="!mailForm.valid"
+          [ngClass]="{ 'hmo-active1': mailForm.valid }"
+          class="num"
+          >2</span
+        >
+        <span [ngClass]="mailForm.valid ? 'hmo-active' : 'text-color'"
+          >Mail Setup</span
+        >
+      </li>
+      <li>
+        <span
+          *ngIf="idGroup.valid && idGroup.length > 0"
+          [ngClass]="{ 'hmo-active1': idGroup.valid && idGroup.length > 0 }"
+          class="numImg"
+        >
+          <img src="assets/images/done-24px.svg" alt="vggg" />
+        </span>
+        <span
+          *ngIf="!idGroup.valid"
+          [ngClass]="{ 'hmo-active1': idGroup.valid && idGroup.length > 0 }"
+          class="num"
+          >3</span
+        >
+        <span
+          [ngClass]="
+            idGroup.valid && idGroup.length > 0 ? 'hmo-active' : 'text-color'
+          "
+          >ID Setup</span
+        >
+      </li>
+      <li>
+        <span
+          *ngIf="bandGroup.valid && bandGroup.length > 0"
+          [ngClass]="{ 'hmo-active1': bandGroup.valid && bandGroup.length > 0 }"
+          class="numImg"
+        >
+          <img src="assets/images/done-24px.svg" alt="vggg" />
+        </span>
+        <span
+          *ngIf="!bandGroup.valid"
+          [ngClass]="{ 'hmo-active1': bandGroup.valid && bandGroup.length > 0 }"
+          class="num"
+          >4</span
+        >
+        <span
+          [ngClass]="
+            bandGroup.valid && bandGroup.length > 0
+              ? 'hmo-active'
+              : 'text-color'
+          "
+          >Hospital Band</span
+        >
+      </li>
+      <li>
+        <span
+          *ngIf="
+            paymentIntegrationGroup.valid && paymentIntegrationGroup.length > 0
+          "
+          [ngClass]="{
+            'hmo-active1':
+              paymentIntegrationGroup.valid &&
+              paymentIntegrationGroup.length > 0
+          }"
+          class="numImg"
+        >
+          <img src="assets/images/done-24px.svg" alt="vggg" />
+        </span>
+        <span
+          [ngClass]="{
+            'hmo-active1':
+              paymentIntegrationGroup.valid &&
+              paymentIntegrationGroup.length > 0
+          }"
+          class="num"
+          >5</span
+        >
+        <span
+          [ngClass]="{
+            'hmo-active':
+              paymentIntegrationGroup.valid &&
+              paymentIntegrationGroup.length > 0
+          }"
+          >Payment Integration</span
+        >
+      </li>
+    </ul>
+    <div class="side-img">
+      <div class="building" *ngSwitchCase="1">
+        <span *ngIf="!showDark">
+          <img class="side-image" src="assets/images/company-office.png" />
+        </span>
+        <span *ngIf="showDark">
+          <img class="side-image" src="assets/images/company-office-dark.png" />
+        </span>
+      </div>
+      <div class="building" *ngSwitchCase="2">
+        <span *ngIf="!showDark">
+          <img class="side-image" src="assets/images/mail.png" />
+        </span>
+        <span *ngIf="showDark">
+          <img class="side-image" src="assets/images/mail-dark.png" />
+        </span>
+      </div>
+      <div class="building" *ngSwitchCase="3">
+        <span *ngIf="!showDark">
+          <img class="side-image" src="assets/images/id.png" />
+        </span>
+        <span *ngIf="showDark">
+          <img class="side-image" src="assets/images/id-dark.png" />
+        </span>
+      </div>
+      <div class="building" *ngSwitchCase="4">
+        <span *ngIf="!showDark">
+          <img class="side-image" src="assets/images/hospital-band.png" />
+        </span>
+        <span *ngIf="showDark">
+          <img class="side-image" src="assets/images/hospital-band-dark.png" />
+        </span>
+      </div>
+      <div class="building" *ngSwitchCase="5">
+        <span *ngIf="!showDark">
+          <img class="side-image" src="assets/images/payment.png" />
+        </span>
+        <span *ngIf="showDark">
+          <img class="side-image" src="assets/images/payment-dark.png" />
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="hmo-main card-container" [ngSwitch]="case">
+    <!-- <div class="help float-right pr-5">
+      <p>Having troubles,<a>Get help?</a></p>
+    </div> -->
+    <div class="company" *ngSwitchCase="1">
+      <div class="company-up">
+        <div class="upload">
+          <h4>Company Name</h4>
+          <form [formGroup]="infoForm">
+            <div class="row">
+              <div class="form-group col-lg-9 col-md-12 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input matInput formControlName="businessName" />
+                  <mat-error>Company Name is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-lg-9 col-md-12 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Business Description</mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="company-down">
+        <div class="upload hmo-margin">
+          <div>
+            <h4>Upload Company Logo</h4>
+            <p>
+              Accepted formats for the logo are PNG,JPEG,SVG maximum file size
+              is 10mb.
+            </p>
+          </div>
+          <div class="logos">
+            <div class="logo1">
+              <div class="logo">
+                <div class="pic">
+                  <ng-template #defImg>
+                    <img
+                      *ngIf="!uploading && !userImage"
+                      class="profile-pic"
+                      src="assets/images/Group3351.svg"
+                      alt="Add Logo"
+                    />
+                  </ng-template>
+                  <div class="profile-pic" *ngIf="uploading">
+                    <app-info-loader></app-info-loader>
+                  </div>
+                  <img
+                    *ngIf="userImage && !uploading"
+                    [src]="userImage"
+                    alt="Add Logo"
+                    class="profile-pic"
+                    click="fileHide()"
+                  />
+                  <img
+                    *ngIf="
+                      infoForm.get('logo').value && !userImage && !uploading;
+                      else defImg
+                    "
+                    [src]="infoForm.get('logo').value"
+                    alt="Add Logo"
+                    class="profile-pic"
+                    click="fileHide()"
+                  />
+                </div>
+              </div>
+              <button
+                mat-stroked-button
+                color="primary"
+                class="upload-btn"
+                [disabled]="uploading"
+                (click)="fileInput1.click()"
+              >
+                Upload Logo
+              </button>
+              <input
+                type="file"
+                #fileInput1
+                required
+                (change)="onImageSelected($event)"
+              />
+              <!-- <button class="green">Upload Logo</button> -->
+            </div>
+            <!-- <div class="logo1">
+              <h4>Favicon</h4>
+              <div class="logo">
+                <div class="pic">
+                  <ng-template #logo>
+                    <img src="assets/images/Group3350.svg" alt="vggg" />
+                  </ng-template>
+                  <img
+                    [src]="infoForm.get('logo2').value"
+                    *ngIf="infoForm.get('logo2').value; else logo"
+                    alt="Add Logo"
+                  />
+                </div>
+              </div>
+              <div>
+                <button
+                  mat-stroked-button
+                  color="primary"
+                  class="transparent-button"
+                  (click)="fileInput2.click()"
+                >
+                  Upload Favicon
+                </button>
+                <input
+                  type="file"
+                  #fileInput2
+                  (change)="onImageSelected2($event)"
+                />
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="hmo-footer card-container">
+        <div class="flex">
+          <button
+            class="next-button"
+            mat-raised-button
+            color="warn"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="next-button"
+            (click)="next(2)"
+            [disabled]="!infoForm.valid"
+          >
+            Next Step >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="company" *ngSwitchCase="2">
+      <div class="hmo-margin">
+        <div>
+          <app-module-header [moduleName]="name"> </app-module-header>
+          <p>Please setup your mail below</p>
+        </div>
+        <form [formGroup]="mailForm">
+          <div class="row">
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Server Address</mat-label>
+                <input matInput readonly formControlName="serverAddress" />
+                <mat-error>Server Address required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Server Port</mat-label>
+                <input matInput readonly formControlName="serverPort" />
+                <mat-error>Server Port is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Secure Option</mat-label>
+                <input matInput readonly formControlName="secureOption" />
+                <mat-error>Secure Option is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Sender UserName</mat-label>
+                <input readonly matInput formControlName="senderUserName" />
+                <mat-error>Sender UserName is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Sender Password</mat-label>
+                <input
+                  type="password"
+                  matInput
+                  readonly
+                  formControlName="senderPassword"
+                />
+                <mat-error>Sender Password is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Sender Name</mat-label>
+                <input matInput formControlName="senderName" />
+                <mat-error>Sender Name is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-lg-9 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>AddOAUTH</mat-label>
+                <input matInput readonly formControlName="addOAUTH" />
+                <mat-error>Sender Name is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="hmo-footer card-container">
+        <div class="flex">
+          <button
+            class="next-button"
+            mat-raised-button
+            color="warn"
+            (click)="previous(1)"
+          >
+            Previous
+          </button>
+          <!-- <span (click)="previous(1)">Previous</span> -->
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="next(3)"
+            class="next-button"
+          >
+            Next Step >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="company" *ngSwitchCase="3">
+      <div class="hmo-margin">
+        <div>
+          <app-module-header [moduleName]="idSetup"> </app-module-header>
+          <p>Please fill in all sections below, preferably in CAPS</p>
+        </div>
+        <form [formGroup]="idGroup">
+          <mat-accordion [multi]="false">
+            <mat-expansion-panel
+              class="mt-2"
+              *ngFor="let idForm of idGroup.controls; let i = index"
+              [formGroupName]="i"
+              [expanded]="i == 0"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span>{{
+                    idGroup.controls[i].controls.labelName.value
+                  }}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="row">
+                <div class="form-group col-lg-9 col-md-6 col-sm-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Dynamic Pattern</mat-label>
+                    <input
+                      autocomplete="off"
+                      matInput
+                      formControlName="prefix"
+                      placeholder="example: HMO/ENR/"
+                    />
+                    <mat-error
+                      *ngIf="
+                        idGroup.controls[i].controls.prefix.errors?.required
+                      "
+                      >Dynamic Pattern is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="
+                        idGroup.controls[i].controls.prefix.hasError(
+                          'invalidDynamicPattern'
+                        )
+                      "
+                      >Dynamic Pattern must end with /</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-lg-9 col-md-6 col-sm-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Static Pattern</mat-label>
+                    <input
+                      autocomplete="off"
+                      matInput
+                      formControlName="value"
+                      placeholder="example: 1000"
+                    />
+                    <mat-error
+                      *ngIf="
+                        idGroup.controls[i].controls.value.errors?.required
+                      "
+                      >Static Pattern is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="
+                        idGroup.controls[i].controls.value.hasError(
+                          'invalidStaticPattern'
+                        )
+                      "
+                      >Static Pattern must be numbers only /</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </form>
+      </div>
+      <div class="hmo-footer card-container">
+        <div class="flex">
+          <button
+            class="next-button"
+            mat-raised-button
+            color="warn"
+            (click)="previous(2)"
+          >
+            Previous
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="next(4)"
+            class="next-button"
+            [disabled]="!idGroup.valid"
+          >
+            Next Step >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="company" *ngSwitchCase="4">
+      <div class="hmo-margin">
+        <div>
+          <app-module-header [moduleName]="band"> </app-module-header>
+          <p>Please add Bands for Hospitals</p>
+        </div>
+        <form [formGroup]="bandGroup">
+          <div
+            *ngFor="let bandForm of bandGroup.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="row">
+              <div class="form-group col-md-6 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Band Name</mat-label>
+                  <input matInput formControlName="name" />
+                  <mat-error>Band Name is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Band Description</mat-label>
+                  <input matInput formControlName="description" />
+                  <mat-error>Band Description is required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <button
+              *ngIf="bandGroup.length > 1"
+              mat-stroked-button
+              class="mb-3"
+              color="warn"
+              (click)="removeBand(i)"
+            >
+              Remove Band
+            </button>
+          </div>
+          <button
+            class="add-band"
+            mat-stroked-button
+            color="primary"
+            (click)="addBand()"
+          >
+            Add Band
+          </button>
+        </form>
+      </div>
+      <div class="hmo-footer card-container">
+        <div class="flex">
+          <button
+            class="next-button"
+            mat-raised-button
+            color="warn"
+            (click)="previous(3)"
+          >
+            Previous
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="next(5)"
+            class="next-button"
+            [disabled]="!bandGroup.valid || bandGroup.length < 1"
+          >
+            Next Step >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="company" *ngSwitchCase="5">
+      <div class="hmo-margin">
+        <div>
+          <app-module-header [moduleName]="payment"> </app-module-header>
+          <p>Please add Payment Platform Keys</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="btn-group mb-3 mt-3">
+          <button
+            mat-stroked-button
+            color="primary"
+            *ngIf="!paystackAdded"
+            class="mr-3"
+            (click)="addPaystack()"
+          >
+            Add Paystack
+          </button>
+          <button
+            mat-stroked-button
+            color="warn"
+            *ngIf="paystackAdded"
+            class="mr-3"
+            (click)="removePaystack()"
+          >
+            Remove Paystack
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            *ngIf="!flutterwaveAdded"
+            (click)="addFlutterwave()"
+          >
+            Add Flutterwave
+          </button>
+          <button
+            mat-stroked-button
+            color="warn"
+            *ngIf="flutterwaveAdded"
+            (click)="removeFlutterwave()"
+          >
+            Remove Flutterwave
+          </button>
+        </div>
+
+        <div class="row" [formGroup]="setUpPayment">
+          <div class="col-sm-12 mb-3">
+            <mat-checkbox formControlName="noPayment" class="mr-3">
+              No Payment Integrations
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <form [formGroup]="paymentIntegrationGroup">
+          <div
+            *ngFor="
+              let paymentForm of paymentIntegrationGroup.controls;
+              let i = index
+            "
+            [formGroupName]="i"
+          >
+            <div class="row">
+              <div class="form-group col-md-6 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input matInput readonly formControlName="name" />
+                </mat-form-field>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Secret Key</mat-label>
+                  <input matInput formControlName="secretKey" />
+                  <mat-error>Secret Key is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Public Key</mat-label>
+                  <input matInput formControlName="publicKey" />
+                  <mat-error>Public Key is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Encryption Key</mat-label>
+                  <input matInput formControlName="encryptionKey" />
+                  <mat-error>Encryption Key is required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="hmo-footer card-container">
+        <div class="flex">
+          <button
+            class="next-button"
+            mat-raised-button
+            color="warn"
+            (click)="previous(4)"
+          >
+            Previous
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="next-button"
+            (click)="complete()"
+            [disabled]="
+              !paymentIntegrationGroup.valid ||
+              (!setUpPayment.controls.noPayment.value &&
+                paymentIntegrationGroup.length < 1)
+            "
+          >
+            Finish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <app-info-loader></app-info-loader>
+</ng-template>
